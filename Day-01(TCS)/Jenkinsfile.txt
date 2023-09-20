@@ -1,0 +1,23 @@
+pipelie {
+    agent any
+
+    stages {
+        stage('C=Checkout'){
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfig: [[url: "https://github.com/rhatagunde/Terraform-advance/tree/main/Day-01(TCS)"]]])
+            }
+        }
+        stage("terraform init") {
+            steps {
+                sh ('terraform init')
+            }
+        }
+        stage("terraform action"){
+            steps {
+                echo "terraform action is -----> ${action}"
+                sh ('terraform ${action} --auto')
+            }
+        }
+
+    }
+}
